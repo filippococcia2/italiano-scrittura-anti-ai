@@ -1,0 +1,519 @@
+# scrittura-italiana — la skill editoriale per l'italiano
+
+> **Corregge, chiarisce, riscrive e rende naturale un testo senza cambiarne il significato:**
+> fatti, intenzione e registro restano dell'autore. Lavora con un metodo editoriale — regole,
+> registro e struttura dell'italiano — non con una blacklist di parole che «sembrano AI».
+> Puoi usarla anche come **humanizer**: riconosce e corregge i tic ricorrenti della prosa
+> generata (perifrasi, gerundite, triadi, trattini lunghi, frasi fatte), senza trucchi per
+> aggirare i detector.
+>
+> *An editorial skill for LLMs, distributed as Agent Skills and a single Markdown file — the editorial
+> skill for Italian: corrects, clarifies and rewrites without changing meaning, working from
+> real knowledge of Italian rules, register and structure. Also works as an Italian humanizer
+> for the tics of generated prose. Content is in Italian.*
+
+<p align="center">
+  <img src="assets/demo-umanizza.gif" alt="Demo: incolli un testo che «sa di AI» e la skill digita la versione umana — via perifrasi, gerundite, triadi e chiusure vuote, ma il fatto resta" width="760">
+</p>
+
+[![Sito](https://img.shields.io/badge/sito-scrittura--italiana-9c2a1f.svg)](https://hypnosdesign.github.io/claude-skill-scrittura-italiana/)
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+![Version](https://img.shields.io/badge/version-2.21.0-blue.svg)
+
+🔗 **[Sito del progetto →](https://hypnosdesign.github.io/claude-skill-scrittura-italiana/)**
+
+## Cos'è
+
+Le istruzioni editoriali sono utilizzabili con **GPT, Claude, Qwen, DeepSeek e altri
+LLM** che leggono istruzioni in italiano. Il modo di caricarle dipende dall'interfaccia:
+formato Agent Skills negli agenti compatibili, oppure versione monofile come istruzioni
+o documento di riferimento. Il plugin Claude Code è uno dei canali di installazione.
+
+Una **skill editoriale**: la installi e il tuo assistente lavora sul testo come un editor —
+con sei azioni riconoscibili. **Scrivi** (da un brief o da appunti), **correggi** (refusi,
+accenti, punteggiatura), **chiarisci** (periodi e filo del discorso), **riscrivi** (struttura
+e ritmo nuovi, contenuto identico), **umanizza**, **risolvi un dubbio di lingua** (regola,
+esempio e fonte).
+
+Puoi usarla anche come *humanizer*: incolli un testo che «sa di AI» e chiedi di renderlo
+più naturale. La revisione interviene su perifrasi, gerundite, triadi, avverbi in *-mente*,
+trattini lunghi, antilingua, cliché e chiusure vuote. Applica lo stesso metodo editoriale
+usato per le altre cinque azioni.
+
+Le istruzioni seguono le **quattro virtù dell'espressione**
+(*virtutes elocutionis*) della retorica classica:
+
+1. **aptum** — appropriatezza a scopo, destinatario, registro e **livello di controllo** del
+   testo (editoriale vs web/social): nel testo informale le convenzioni da tastiera — virgolette
+   dritte, accenti "da tastiera" — non sono errori e non vanno corrette.
+2. **puritas** — correttezza **tipografica** (virgola, punto e virgola, due punti, virgolette
+   caporali « » vs dritte, trattino vs lineetta, maiuscole, sigle) e **di parola** (accenti,
+   omofoni come *da/dà*, *qual è*, *un po'*, *sé stesso*, plurali difficili, *tu/te*).
+3. **perspicuitas** — chiarezza: il lettore capisce alla prima.
+4. **ornatus** — bellezza *regolata*: figure, ritmo, argomentazione, costruzione del testo
+   (incipit, sviluppo, chiusura). Il suo eccesso (la *mala affectatio*) è esattamente lo
+   **slop dell'AI** — perifrasi, gerundite, triadi, avverbi in *-mente*, aggettivi pomposi,
+   antilingua e affettazione all'italiana — che la skill riconosce e rimuove (78 pattern
+   stilistici + 2 invarianti semantiche, 80 controlli numerati, oltre al repertorio di cliché).
+
+Il principio guida è l'**equilibrio**: ogni virtù sta tra due vizi, per difetto (sciatteria,
+oscurità) e per eccesso (slop). La differenza rispetto a un semplice "umanizzatore": qui c'è
+sia il livello prescrittivo (punteggiatura) sia quello costruttivo (retorica applicata), con
+un **workflow ordinato** che va dalla struttura alla pelle.
+
+Le sei azioni poggiano su guide dedicate: **sintassi** (congiuntivo, *consecutio*, periodo
+ipotetico), **coesione** (il filo tra frasi e capoversi, i connettivi), **argomentazione**
+(costruire una tesi, riassumere), **divulgazione** (spiegare cose complesse), **narrativa**
+(idea, punto di vista), **traduzione verso l'italiano** e **revisione** (la parola giusta, la
+lima). Distillate da una libreria di manuali italiani — Serianni, Mortara Garavelli, Giunta,
+Pontiggia, Rigotti e altri.
+
+## Due prove di mestiere
+
+L'esempio in alto è il caso più comune. Ma «sa l'italiano» vuol dire anche **sapere quando *non*
+toccare** e **rispondere ai dubbi di lingua**:
+
+<p align="center">
+  <img src="assets/demo-registro.gif" alt="Demo: una chat informale lasciata com'è — e', perché da tastiera e i puntini non sono errori, sono il registro" width="680">
+</p>
+
+**Riconosce il registro** (*aptum*). Davanti a una chat informale non ipercorregge: `e'`,
+`perche` da tastiera e i puntini di sospensione non sono errori, sono il registro — imporre la
+tipografia editoriale a un messaggio è esso stesso un errore.
+
+<p align="center">
+  <img src="assets/demo-lingua.gif" alt="Demo: «qual è o qual'è?» — risposta con regola ed esempio, qual è senza apostrofo perché è un troncamento" width="680">
+</p>
+
+**Risponde ai dubbi di lingua** (*puritas*). *Qual è o qual'è?* Regola + esempio: «qual» è un
+troncamento, non un'elisione → niente apostrofo. È anche un consulente, non solo un editor.
+
+## Struttura
+
+```
+.
+├── SKILL.md                      # modello (4 virtù), workflow, principî cardine, guardia sui fatti
+├── references/
+│   ├── punteggiatura.md          # puritas (segni): 15 schede, regole, errori, esempi
+│   ├── dubbi-e-errori.md         # puritas (parole + sintassi): accenti, omofoni, plurali,
+│   │                             #   pronomi, congiuntivo/consecutio/ipotetico, participio, digitato
+│   ├── retorica-efficacia.md     # aptum/perspicuitas/ornatus: 4 virtù, 3 stili, figure,
+│   │                             #   compositio, tópoi, dispositio, tesi, riassunto, discorso riferito
+│   ├── coesione-e-connettivi.md  # il filo: coesione vs coerenza, tassonomia dei connettivi
+│   ├── stile-naturale.md         # anti-slop: 78 pattern + 2 invarianti semantiche
+│   │                             #   + "Dare voce" + audit
+│   ├── cliche-e-parole-alla-moda.md  # parole alla moda, tormentoni, luoghi comuni, cliché, plastismi
+│   ├── spiegare-con-chiarezza.md # divulgare/documentare: chiarezza, numeri, termine tecnico, anti-hype
+│   ├── narrativa.md              # raccontare: idea vs trama, personaggio, dialogo, scena, tensione, revisione
+│   ├── revisione-e-proprieta.md  # la parola giusta (le mot juste), collaudo metafore, revisione a freddo
+│   └── voce-autore.md           # scheda di voce, riscontri e preferenze dell'autore
+├── scripts/confronta-voce.mjs    # misure locali facoltative, JSON e confronto con la bozza
+└── evals/
+    ├── evals.json                # 69 casi dev + 6 held-out congelati
+    ├── manifest.json             # nomi, generi, livelli (exact/minimal/semantic/…) e split
+    ├── run.mjs                   # runner content-addressed, verdetti fail-closed, braccio --no-skill
+    ├── run.test.mjs              # test deterministici del runner
+    ├── activation.mjs            # attivazione e instradamento misurati nel client reale
+    ├── activation.test.mjs       # attribuzione candidata/personale/ambigua, zero LLM
+    ├── activation-cases.json     # 20 positivi, 15 negativi, 8 casi di routing
+    ├── codex-client.mjs          # client GPT: modello confermato e letture controllate
+    ├── gpt-study.mjs             # calibrazione, regressioni e confronto dei nuclei con GPT
+    ├── gpt-study.test.mjs        # restrizioni del client, snapshot e split
+    ├── context-study.mjs         # preparazione e confronto dei nuclei con il client Claude
+    ├── context-study.test.mjs    # integrità, parità delle condizioni e ripresa delle prove
+    ├── experiments/              # protocolli e candidata compatta non adottata
+    ├── blind-kit.mjs             # confronto umano cieco, build e scoring fail-closed
+    ├── blind-kit.test.mjs        # parser CSV, parità modelli e minimo tre lettori
+    ├── stability.mjs             # digest deterministico per run multipli (media, flip, delta)
+    ├── stability.test.mjs        # test del digest di stabilità
+    ├── results/                  # run ordinari ignorati; reference-* versionati
+    ├── README.md                 # provenienza e requisiti del benchmark
+    └── 01-03-*.md               # spot check editoriali commentati
+```
+
+`SKILL.md` è autosufficiente per i casi frequenti; i file in `references/` vengono consultati
+quando serve il dettaglio (*progressive disclosure*).
+
+### Perché le istruzioni sono in italiano
+
+I file Markdown della skill sono in italiano perché descrivono regole, registri ed esempi
+della lingua italiana. Scriverli nella lingua del compito permette di controllare gli esempi
+senza tradurli. Questo, da solo, non prova che un modello risponda meglio a istruzioni in
+italiano: le [valutazioni del progetto](evals/README.md) confrontano la skill con altre
+condizioni, ma non isolano la lingua delle istruzioni in un confronto italiano/inglese.
+
+`SKILL.md` contiene le istruzioni che l'assistente carica quando la skill si attiva; i file
+in `references/` vengono letti quando servono. Questo README spiega il progetto a chi lo
+visita e non entra automaticamente nel contesto della skill. La sua prosa è stata rivista
+con gli stessi criteri editoriali, rispettando comandi, nomi di file, esempi e dati.
+
+## Stato e verifiche
+
+La release **2.21.0** aggiunge una decima guida per il profilo di voce, un misuratore
+facoltativo e il controllo che il testo pubblicabile si regga senza la chat.
+Il marketplace e il plugin Claude Code, introdotti nella 2.20.0, gestiscono
+installazione e aggiornamenti. Il pacchetto contiene il nucleo completo: la variante
+compatta sperimentale **non è stata adottata**, perché nelle prove perdeva informazioni.
+Le [note della release](docs/releases/v2.21.0.md) riepilogano cosa cambia.
+
+La suite comprende **75 casi: 69 di sviluppo e 6 held-out**. I sei held-out restano
+fuori dalle prove usate per correggere la skill. I test deterministici verificano gli
+strumenti di valutazione, il misuratore, il pacchetto e la sincronizzazione del sito;
+non misurano la qualità editoriale delle risposte. I nove casi nuovi sono aspettative
+da verificare con i modelli, senza risultati comportamentali ancora dichiarati.
+
+Le prove di settembre usano **GPT Terra 5.6, Sol 6 e Luna 6**, con ruoli e risultati
+distinti. Nel controllo finale mirato, Sol ottiene **18 risposte conformi su 22**
+secondo il giudice automatico. La rilettura dell'assistente conferma quattro output
+non conformi: formule generiche nel copy, strutture retoriche non sciolte nel saggio
+e un'affermazione attenuata da «limita» a «può limitare».
+
+L'audit resta aperto. Non c'è una valutazione umana indipendente e queste selezioni
+di casi di sviluppo non dimostrano superiorità generale, equivalenza fra varianti
+o preferenza dei lettori. L'uso dei riferimenti è stato misurato, non l'attivazione
+automatica della skill nei client GPT. Protocollo, output e limiti sono nel
+[resoconto GPT](evals/results/reference-2026-09-seguito/GPT.md); la coda dei rilievi è
+nel [seguito dell'audit](AUDIT-2026-09-SEGUITO.md).
+
+## Documentazione
+
+- **[FAQ.md](FAQ.md)** — domande ricorrenti (è un humanizer? non è un autocorrettore? mi impone uno stile?…).
+- **[ESEMPI.md](ESEMPI.md)** — casi *prima → dopo* (testo AI, revisione di testo umano, registro informale).
+- **[scrittura-italiana-single-file.md](scrittura-italiana-single-file.md)** — tutta la skill in un file, per Gemini/ChatGPT e assistenti senza supporto nativo alle Skill.
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** — come contribuire.
+- **[CHANGELOG.md](CHANGELOG.md)** — storia delle versioni.
+- **[SEO del sito](docs/SEO.md)** — controlli dei metadati e configurazione futura di Search Console.
+
+## Installazione
+
+### Via `npx skills` (consigliato — multi-agente)
+
+Installazione in un comando, da [skills.sh](https://www.skills.sh) (rileva da solo gli agent
+installati: Claude Code, Cursor, Copilot…):
+
+```bash
+npx skills add hypnosdesign/claude-skill-scrittura-italiana
+```
+
+Per aggiornare questa skill, esegui nel terminale:
+
+```bash
+npx skills update scrittura-italiana
+```
+
+Con `npx skills update`, senza il nome, aggiorni tutte le skill gestite dal CLI.
+Gli aggiornamenti vanno avviati manualmente. Vedi la
+[documentazione di skills](https://github.com/vercel-labs/skills).
+
+### Claude Code — marketplace (consigliato per Claude Code)
+
+Esegui questi due comandi dentro Claude Code:
+
+```text
+/plugin marketplace add hypnosdesign/claude-skill-scrittura-italiana
+/plugin install scrittura-italiana@scrittura-italiana
+```
+
+Il marketplace e il plugin si chiamano entrambi `scrittura-italiana`. Riapri Claude
+Code dopo l'installazione. La skill si attiva sulle richieste pertinenti; puoi anche
+invocarla con `/scrittura-italiana:scrittura-italiana`.
+
+Per ricevere **aggiornamenti automatici**, apri `/plugin` → **Marketplaces**, seleziona
+`scrittura-italiana` e abilita **Enable auto-update**. L'opzione è disattivata per
+impostazione predefinita nei marketplace aggiunti dall'utente.
+Per aggiornare manualmente, esegui nel terminale:
+
+```bash
+claude plugin marketplace update scrittura-italiana
+claude plugin update scrittura-italiana@scrittura-italiana
+```
+
+Riapri Claude Code per caricare la versione aggiornata. Vedi la
+[documentazione sugli aggiornamenti](https://code.claude.com/docs/en/plugins/host-marketplace#keep-users-up-to-date).
+Se avevi già installato la skill con Git o `npx skills`, rimuovi quella copia quando
+passi al plugin, per evitare che Claude Code carichi due volte la stessa skill.
+
+### Claude Code (CLI) — manuale
+
+Clona dentro la cartella delle skill personali:
+
+```bash
+git clone https://github.com/hypnosdesign/claude-skill-scrittura-italiana \
+  ~/.claude/skills/scrittura-italiana
+```
+
+Oppure, per un singolo progetto, in `.claude/skills/scrittura-italiana` nella radice del repo.
+Riavvia/riapri Claude Code: la skill comparirà tra quelle disponibili.
+
+### Claude Desktop / claude.ai
+
+1. Scarica il pacchetto-skill **`scrittura-italiana-<versione>.zip`** dalle
+   [Release](https://github.com/hypnosdesign/claude-skill-scrittura-italiana/releases/latest)
+   (è l'asset allegato alla release — **non** il *Source code*:
+   quello impacchetta l'intero repo e l'uploader lo rifiuta con «exactly one SKILL.md»).
+2. Apri Claude → **Impostazioni → Capabilities (Funzionalità) → Skills**.
+3. **Carica** la cartella `scrittura-italiana` (o il suo `.zip`). I file in `references/`
+   viaggiano con la skill: la skill li legge dal proprio sandbox quando servono.
+
+> La funzionalità **Skills** nelle app consumer richiede che *code execution* sia attivo
+> (dipende dal piano: Pro/Max/Team/Enterprise). Se non vedi "Skills" in Impostazioni,
+> abilitala lì o aggiorna l'app. Claude Desktop e claude.ai condividono lo stesso account:
+> una skill caricata è disponibile in entrambi.
+
+### GPT, Qwen, DeepSeek, Gemini e altri LLM
+
+- **Gemini CLI** e altri agent compatibili col formato Agent Skills: usa lo stesso
+  `npx skills add hypnosdesign/claude-skill-scrittura-italiana` (rileva l'agent installato).
+- **GPT, Qwen, DeepSeek e altri LLM**: fornisci la versione monofile come istruzioni
+  o documento di riferimento, secondo le capacità e il contesto dell'interfaccia.
+- **App Gemini, Custom GPT di ChatGPT** e simili (niente supporto nativo alle Skill): usa la
+  **[versione in un solo file](scrittura-italiana-single-file.md)** — incolla quel documento
+  nelle istruzioni di un *Gem* / Custom GPT, o caricalo come file di conoscenza. La skill è
+  istruzioni in markdown: qualsiasi LLM capace ne segue le regole; si perde solo l'attivazione
+  automatica e il caricamento on-demand dei riferimenti.
+
+## Uso
+
+Negli agenti che supportano le skill, l'attivazione può avvenire sulle richieste
+pertinenti. Nelle altre interfacce, fornisci le istruzioni e chiedi di applicare
+Scrittura italiana. Esempi:
+
+- «Correggi questo testo in italiano: …»
+- «Scrivi l'introduzione della tesi su … in italiano»
+- «Questa frase ci vuole la virgola prima di *che*?»
+- «Rendi questo testo meno “da AI”, mantenendo il mio registro»
+
+Se fornisci un **campione del tuo stile**, la skill calibra la voce su quello invece di
+appiattire tutto a un italiano neutro.
+
+## Conservare e confrontare la propria voce
+
+Chiedi «Crea una scheda riutilizzabile della mia voce per le newsletter» e fornisci
+campioni dello stesso contesto. La skill documenta le caratteristiche osservate con
+riscontri nei testi e registra separatamente le preferenze richieste. La scheda può
+essere fornita insieme ai brief successivi; non trasferisce i fatti dei campioni.
+
+Per le misure facoltative serve Node.js 22 o successivo. Dalla cartella della skill:
+
+```bash
+node scripts/confronta-voce.mjs --campione campioni/ --registro newsletter
+node scripts/confronta-voce.mjs --campione campioni/ --testo bozza.md --registro newsletter
+```
+
+Il risultato JSON contiene lunghezze di frasi e capoversi, punteggiatura, ricorrenze,
+metodo e impronte dei file. Lo strumento non modifica i testi. Le differenze servono
+a individuare scelte da valutare: non sono un punteggio o un obiettivo da raggiungere.
+Senza Node puoi usare la scheda con osservazioni qualitative. Dettagli, convenzioni di
+conteggio e limiti in [voce-autore.md](references/voce-autore.md).
+
+Per una pubblicazione puoi chiedere «Rendi questo avviso comprensibile senza la nostra
+chat, usando solo il brief». La skill chiarisce i riferimenti con informazioni già
+fornite e segnala a parte le lacune. Conserva domande utili e segnali di percorso;
+una richiesta di soli refusi non autorizza questa riscrittura.
+
+## Esempi (prima → dopo)
+
+> 📄 Esempi completi e commentati in **[ESEMPI.md](ESEMPI.md)**: testo generato dall'AI,
+> revisione di un testo umano (con la regola spiegata), e quando la skill *non* corregge
+> (registro informale). Qui sotto, alcuni casi rapidi.
+
+### 1. Stile: rimuovere i segni dell'AI
+
+**Prima** (perifrasi, gerundite, triadi, avverbi in *-mente*, chiusura ottimistica vuota):
+
+> Il nuovo museo si configura come una testimonianza vivente del patrimonio cittadino,
+> rappresentando un punto di svolta cruciale nel panorama culturale locale e contribuendo
+> significativamente a valorizzare l'identità del territorio. Gli spazi, ampi e luminosi,
+> sono stati sapientemente progettati per accogliere mostre, laboratori ed eventi. Il futuro
+> si prospetta indubbiamente brillante.
+
+**Fatti forniti dall'autore** (la skill *non li inventa*: davanti a un testo vago li **chiede** o
+lascia un segnaposto — vedi nota sotto): aperto a marzo, in un ex pastificio; tre sale al piano
+terra (collezione permanente) + una al primo piano (mostre temporanee); prima mostra sui manifesti
+pubblicitari degli anni Trenta, fino a giugno.
+
+**Dopo** (copula, frasi spezzate, gli stessi fatti, voce):
+
+> Il museo ha aperto a marzo in un ex pastificio. Tre sale al piano terra ospitano la
+> collezione permanente; quella al primo piano è riservata alle mostre temporanee. La prima,
+> sui manifesti pubblicitari degli anni Trenta, resta aperta fino a giugno.
+
+> **Nota:** il "dopo" usa **solo** i fatti del blocco sopra, forniti dall'autore — mostra la
+> *resa* asciutta, non una generazione di dettagli. Inventare specifici plausibili per riempire
+> un vuoto è esso stesso un tic AI (la *concretezza finta*): la skill segnala il vuoto, non lo colma.
+
+### 2. Punteggiatura: virgola tra soggetto e verbo
+
+> ✗ `Il bollettino meteorologico, non lascia prevedere un miglioramento.`
+> ✓ `Il bollettino meteorologico non lascia prevedere un miglioramento.`
+
+La virgola non separa mai il soggetto dal suo verbo (salvo un inciso chiuso da **due** virgole:
+`Il bollettino, da giorni ormai, non lascia prevedere…`).
+
+### 3. Punteggiatura: relativa restrittiva vs esplicativa
+
+> `Non seguo i programmi che mi sembrano scadenti.` → solo quelli scadenti (restrittiva, **niente** virgola)
+> `Non seguo i programmi, che mi sembrano scadenti.` → tutti, e per inciso sono scadenti (esplicativa, **con** virgola)
+
+La virgola cambia il significato della frase.
+
+### 4. Tipografia: virgolette e trattino
+
+Le virgolette coerenti si conservano, anche in un testo destinato alla stampa:
+`Ha detto "sì" subito.` non richiede di passare ai caporali. Se chiedi esplicitamente
+di adottarli, diventa `Ha detto «sì» subito.`
+
+Un trattino usato per separare una frase può invece essere sostituito durante una
+revisione di stile, senza cambiare le virgolette:
+
+> Prima: `Ha detto "sì" subito - senza pensarci.`
+> Dopo: `Ha detto "sì" subito, senza pensarci.`
+
+## Fonti e attribuzione
+
+Questa skill è un'opera derivata e cita le sue fonti:
+
+- **Punteggiatura e tipografia** — regole *sintetizzate e riscritte* da
+  Bice Mortara Garavelli, *Prontuario di punteggiatura*, Laterza (2003).
+- **Retorica ed efficacia** (4 virtù, stili, figure, *compositio*, *tópoi*) — concetti
+  *distillati e riformulati* da Bice Mortara Garavelli, *Manuale di retorica*, Bompiani.
+- **Dubbi ed errori comuni** (accenti, omofoni, plurali, pronomi…) — regole *sintetizzate e
+  riscritte* da Manolo Trinci, *Le basi proprio della grammatica*, Bompiani (2019).
+  Sono norme e nozioni della lingua, patrimonio comune; le definizioni e gli esempi della
+  skill sono originali, **non** una riproduzione dei libri. Per lo studio approfondito,
+  leggete le opere: sono i riferimenti sull'argomento.
+- **Costruzione del testo, antilingua e cliché** — C. Giunta, *Come non scrivere* (UTET, 2018),
+  e i classici a cui rimanda (Calvino, Orwell, Savinio).
+- **Grammatica, sintassi, coesione, argomentazione, divulgazione, narrativa e revisione**
+  (dalla v2.4.0) — distillati da una libreria di manuali italiani: L. Serianni (*Italiano*, 1997;
+  *L'italiano: parlare scrivere digitare*, 2019; *Leggere, scrivere, argomentare*, 2015),
+  M. Dardano e P. Trifone (*Grammatica italiana. Con nozioni di linguistica*, 1995), E. Perini
+  (*Grammatica italiana per tutti*, 2016), F. Rigotti (*Il filo del pensiero*, 2002), B. Barattelli
+  (*Scrivere bene*, 2015), G. Pontiggia
+  (*Per scrivere bene imparate a nuotare*, 2020), M. Birattari (2011), D. Gouthier (*Scrivere di
+  scienza*, 2019), M. Massai (*L'idea narrativa*, 2015), Gotham Writers' Workshop (*Lezioni di
+  scrittura creativa*, 2014), R. Carver (*Il mestiere di scrivere*), Martino–Alfieri (*Scrivere
+  ganzo*, 2015), F. Julita (*Scrivere con l'AI*, 2025).
+- **Mosse del divulgatore e calibrazione di registro** (dalla v2.9.0) — distillati non da
+  manuali ma da un *corpus di prosa italiana nativa*: M. Ferrari (*Le piante non sono animali
+  verdi*), G. Vallortigara (*Pensieri della mosca con la testa storta*), L. Floridi (*Pensare
+  l'infosfera*); con G. Simondon (*Del modo di esistenza degli oggetti tecnici*) come contrasto
+  di registro.
+- **Stile / pattern anti-AI** — adattamento italiano di
+  [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
+  (WikiProject AI Cleanup), disponibile sotto **CC BY-SA 4.0**. In conformità con il
+  *share-alike*, anche questa skill è rilasciata sotto la stessa licenza.
+
+## In English
+
+**scrittura-italiana** is an [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills)
+for **writing and editing Italian**. Its instructions and examples are in Italian; this
+section explains what it does and how to use it.
+
+### What it does — an editorial skill for Italian
+
+It corrects, clarifies and rewrites Italian text **without changing its meaning**: facts,
+intent and register stay the author's. You can also use it as a **humanizer**: paste
+AI-sounding text and get it back natural — no periphrasis, trailing gerunds, forced triads,
+*-mente* adverbs, em dashes, "antilingua" affectation or clichés, and no tricks to fool
+detectors. Unlike a find-and-replace, it works from the four classical *virtutes
+elocutionis*:
+
+1. **aptum** — appropriateness to purpose, audience, register.
+2. **puritas** — grammatical and typographical correctness: comma, semicolon, colon,
+   quotation marks (Italian guillemets « » vs straight quotes), hyphen vs dash, capitalization,
+   acronyms.
+3. **perspicuitas** — clarity: the reader gets it on first read.
+4. **ornatus** — *measured* beauty: figures, rhythm, argumentation, text construction
+   (opening, development, closing). Its excess (*mala affectatio*) is exactly AI slop —
+   periphrasis, trailing gerunds, forced triads, *-mente* adverbs, the Italian "antilingua"
+   affectation — which the skill detects and removes (78 stylistic patterns plus 2 semantic
+   invariants: 80 numbered checks, alongside a register of clichés and stock phrases).
+
+The guiding principle is **balance**: each virtue sits between two vices, by deficiency
+(sloppiness, obscurity) and by excess (slop). Unlike a generic "humanizer", this skill carries
+both the prescriptive layer (punctuation) and the constructive one (applied rhetoric), with an
+**ordered workflow** from structure to surface, ending in an anti-AI audit. Beyond humanizing, it
+covers the full arc of writing: **syntax** (subjunctive, *consecutio*, conditionals),
+**cohesion** (connectives, the thread of discourse), **argumentation** (building a thesis,
+summarizing), **explanatory writing** (science/technical), **narrative** and **revision** —
+distilled from a library of Italian writing manuals (Serianni, Mortara Garavelli, Giunta,
+Pontiggia, Rigotti and others).
+
+### Install
+
+```bash
+# Agents that support Agent Skills
+npx skills add hypnosdesign/claude-skill-scrittura-italiana
+```
+
+Use the complete Markdown file as instructions or a reference document with GPT,
+Claude, Qwen, DeepSeek and other LLMs. How you load it depends on your interface.
+The Claude Code plugin is another installation option; see the instructions above.
+
+### Use
+
+Ask your assistant to apply Scrittura italiana when writing or editing Italian text, or
+answering a punctuation question (e.g. *"Correggi questo testo"*, *"ci vuole la virgola prima di che?"*).
+Automatic activation and reference loading depend on the client's support for skills.
+Provide a sample of your own writing and it will match your voice instead of flattening
+everything to neutral Italian. See the **Esempi (prima → dopo)** section above for before/after
+demonstrations.
+
+The skill instructions and examples are in Italian because they deal with Italian usage.
+The README is documentation for readers; it is not automatically loaded when the skill
+activates. Our [evaluations](evals/README.md) do not isolate instruction language, so they
+do not establish that Italian instructions alone improve model output.
+
+### Release status and limits
+
+Version **2.21.0** adds a reusable voice profile, optional local measurements
+and a check that publishable documents make sense without the originating chat.
+The Claude Code marketplace and plugin were introduced in 2.20.0. Run
+`/plugin marketplace add hypnosdesign/claude-skill-scrittura-italiana`, then
+`/plugin install scrittura-italiana@scrittura-italiana` inside Claude Code.
+Enable auto-update for this marketplace under `/plugin` → **Marketplaces**.
+The experimental compact variant is not included: it lost information in the
+comparison. Download the installable ZIP from the
+[latest release](https://github.com/hypnosdesign/claude-skill-scrittura-italiana/releases/latest).
+
+The suite has **69 development cases and 6 held-out cases**. Deterministic tests
+check tools, measurements, packaging and site synchronization, not writing quality.
+The nine new behavioral cases have not been run against models yet.
+The final targeted Sol check returned 18/22 automatic passes; four outputs remain
+non-compliant after the assistant's review. Tests also used Terra and Luna in
+separate roles. There were no independent human readers, and the results do not
+establish general superiority or reader preference. The audit remains open; see
+the [GPT report](evals/results/reference-2026-09-seguito/GPT.md).
+
+### Sources & license
+
+Punctuation rules are synthesized from B. Mortara Garavelli, *Prontuario di punteggiatura*
+(Laterza, 2003); the rhetoric layer distills her *Manuale di retorica* (Bompiani); the
+common-mistakes layer rewrites rules from M. Trinci, *Le basi proprio della grammatica*
+(Bompiani, 2019); text construction, the "antilingua", affectation and clichés draw on
+C. Giunta, *Come non scrivere* (UTET, 2018) and the classics it points to (Calvino, Orwell,
+Savinio). Since v2.4.0 the grammar, syntax, cohesion, argumentation, explanatory-writing,
+narrative and revision layers are distilled from a library of Italian writing manuals (Serianni,
+Rigotti, Barattelli, Pontiggia, Birattari, Gouthier, Massai, Martino–Alfieri, and F. Julita's
+*Scrivere con l'AI*, 2025). These are facts of usage and classical-rhetoric concepts, not
+copyrightable; the skill's wording and examples are original, not a reproduction. The style layer
+adapts
+[Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
+(CC BY-SA 4.0); per share-alike, this skill is released under the same license. Contributions
+welcome via issues and pull requests — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Licenza
+
+[Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/) —
+vedi il file [`LICENSE`](LICENSE).
+
+Puoi usarla, modificarla e ridistribuirla, anche per fini commerciali, a patto di **citare la
+fonte** e di **rilasciare le opere derivate sotto la stessa licenza**.
+
+## Contribuire
+
+Segnalazioni e proposte sono benvenute via issue o pull request: nuovi pattern dell'italiano
+AI, precisazioni sulle regole di punteggiatura, esempi migliori, refusi. Leggi le linee guida
+in [`CONTRIBUTING.md`](CONTRIBUTING.md). Per le regole di punteggiatura, indica sempre la fonte
+o l'uso attestato.

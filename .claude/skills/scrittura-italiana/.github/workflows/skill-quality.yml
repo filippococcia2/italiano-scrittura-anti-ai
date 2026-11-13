@@ -1,0 +1,70 @@
+name: Skill quality
+
+# Controlli deterministici della skill: zero chiamate LLM, costo nullo, nessun flake.
+
+on:
+  pull_request:
+    paths:
+      - ".claude-plugin/**"
+      - "SKILL.md"
+      - "references/**"
+      - "evals/**"
+      - "build-single-file.py"
+      - "scrittura-italiana-single-file.md"
+      - "scripts/check-description.mjs"
+      - "scripts/check-versions.mjs"
+      - "scripts/package-skill.mjs"
+      - "scripts/package-skill.test.mjs"
+      - "scripts/confronta-voce*.mjs"
+      - "README.md"
+      - "FAQ.md"
+      - "ESEMPI.md"
+      - "CHANGELOG.md"
+      - ".github/workflows/skill-quality.yml"
+  push:
+    branches: [main]
+    paths:
+      - ".claude-plugin/**"
+      - "SKILL.md"
+      - "references/**"
+      - "evals/**"
+      - "build-single-file.py"
+      - "scrittura-italiana-single-file.md"
+      - "scripts/check-description.mjs"
+      - "scripts/check-versions.mjs"
+      - "scripts/package-skill.mjs"
+      - "scripts/package-skill.test.mjs"
+      - "scripts/confronta-voce*.mjs"
+      - "README.md"
+      - "FAQ.md"
+      - "ESEMPI.md"
+      - "CHANGELOG.md"
+      - ".github/workflows/skill-quality.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test deterministici (runner, stabilità, kit cieco, attivazione)
+        run: node --test evals/run.test.mjs evals/stability.test.mjs evals/blind-kit.test.mjs evals/activation.test.mjs evals/context-study.test.mjs evals/gpt-study.test.mjs
+      - name: Validazione suite e manifest (zero LLM)
+        run: node evals/run.mjs --validate-only
+      - name: Misuratore della voce e pacchetto distribuibile
+        run: node --test scripts/confronta-voce.test.mjs scripts/package-skill.test.mjs
+      - name: Lunghezza della description (limite Desktop/claude.ai)
+        run: node scripts/check-description.mjs
+      - name: Coerenza della versione (frontmatter, plugin, badge, CHANGELOG)
+        run: node scripts/check-versions.mjs
+      - name: Freschezza del single-file (ricostruzione + diff)
+        run: |
+          python3 build-single-file.py
+          git diff --exit-code scrittura-italiana-single-file.md
+      - name: Pacchetto installabile (un solo SKILL.md)
+        run: node scripts/package-skill.mjs

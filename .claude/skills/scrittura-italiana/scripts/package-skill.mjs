@@ -1,0 +1,70 @@
+#!/usr/bin/env node
+// package-skill.mjs — Crea il pacchetto-skill caricabile su Claude Desktop / claude.ai.
+//
+// Lo zip "Source code" di GitHub contiene TUTTO il repo (evals, docs, script, GIF) e
+// include l'artefatto `evals/results/.../skill.md`: su filesystem case-insensitive (macOS)
+// vale come secondo `SKILL.md`, e l'uploader rifiuta lo zip («exactly one SKILL.md»).
+// Questo script produce il payload: `SKILL.md`, `references/` e il solo misuratore
+// facoltativo della voce, con un unico SKILL.md. Esclude gli altri script e i test.
+//
+// Uso (manutentori, a ogni release):
+//   node scripts/package-skill.mjs
+//   gh release upload vX.Y.Z dist/scrittura-italiana-X.Y.Z.zip
+//
+// Output: dist/scrittura-italiana-<versione>.zip  (dist/ è gitignored)
+
+import { execFileSync } from "node:child_process";
+import { cpSync, mkdtempSync, mkdirSync, readFileSync, rmSync, existsSync, statSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const repo = dirname(dirname(fileURLToPath(import.meta.url)));
+const skill = join(repo, "SKILL.md");
+const refs = join(repo, "references");
+
+// — preflight —
+if (!existsSync(skill)) fail(`manca SKILL.md in ${repo}`);
+if (!existsSync(refs)) fail(`manca references/ in ${repo}`);
+const voiceScript = join(repo, "scripts", "confronta-voce.mjs");
+if (!existsSync(voiceScript)) fail("manca scripts/confronta-voce.mjs");
+
+const fm = readFileSync(skill, "utf8").split(/^---$/m)[1] ?? "";
+const version = (fm.match(/version:\s*"?(\d+\.\d+\.\d+)"?/) ?? [])[1];
+if (!version) fail("versione non trovata nel frontmatter di SKILL.md (metadata.version)");
+
+// — staging: solo il payload, alla radice —
+const stage = mkdtempSync(join(tmpdir(), "skill-pkg-"));
+const dist = join(repo, "dist");
+mkdirSync(dist, { recursive: true });
+const out = join(dist, `scrittura-italiana-${version}.zip`);
+rmSync(out, { force: true });
+
+let listing;
+try {
+  cpSync(skill, join(stage, "SKILL.md"));
+  cpSync(refs, join(stage, "references"), { recursive: true });
+  mkdirSync(join(stage, "scripts"));
+  cpSync(voiceScript, join(stage, "scripts", "confronta-voce.mjs"));
+
+  // `zip` è standard su macOS/Linux; -X niente metadati extra, escludi i .DS_Store.
+  // execFileSync con argomenti separati: niente interpolazione di percorsi nella shell.
+  execFileSync("zip", ["-rX", out, "SKILL.md", "references", "scripts/confronta-voce.mjs", "-x", "*.DS_Store"], { cwd: stage, stdio: "pipe" });
+  // — verifica: esattamente un SKILL.md (case-insensitive) —
+  listing = execFileSync("unzip", ["-l", out], { encoding: "utf8" });
+} finally {
+  rmSync(stage, { recursive: true, force: true });
+}
+
+const skillCount = (listing.match(/^\s*\d+.*\bskill\.md\b/gim) ?? []).length;
+if (skillCount !== 1) fail(`lo zip contiene ${skillCount} SKILL.md (atteso 1)`);
+
+const kb = Math.round(statSync(out).size / 1024);
+const files = (listing.match(/\.md$/gim) ?? []).length;
+console.log(`✓ ${out}`);
+console.log(`  versione ${version} · ${files} file .md + misuratore voce · ${kb} KB · un solo SKILL.md`);
+
+function fail(msg) {
+  console.error(`✗ package-skill: ${msg}`);
+  process.exit(1);
+}
