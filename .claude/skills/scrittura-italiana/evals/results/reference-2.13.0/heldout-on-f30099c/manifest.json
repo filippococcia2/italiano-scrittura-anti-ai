@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "eval_set": "evals.json",
+  "evals": [
+    {"id": 1, "name": "prosa-buona", "genre": "saggistica già buona", "target": "preserve", "split": "dev"},
+    {"id": 2, "name": "bipolare-informativo", "genre": "saggistica", "target": "preserve", "split": "dev"},
+    {"id": 3, "name": "bipolare-ornamentale", "genre": "copy", "target": "improve", "split": "dev"},
+    {"id": 4, "name": "chat-informale", "genre": "chat non controllata", "target": "preserve", "split": "dev"},
+    {"id": 5, "name": "grammatica-minima", "genre": "proofread", "target": "improve", "split": "dev"},
+    {"id": 6, "name": "copy-senza-dati", "genre": "copy", "target": "improve", "split": "dev"},
+    {"id": 7, "name": "documentazione-tecnica", "genre": "documentazione tecnica", "target": "preserve", "split": "dev"},
+    {"id": 8, "name": "scientifico-incertezza", "genre": "testo scientifico", "target": "preserve", "split": "dev"},
+    {"id": 9, "name": "legale-condizioni", "genre": "testo legale", "target": "preserve", "split": "dev"},
+    {"id": 10, "name": "narrativa-frammenti", "genre": "narrativa", "target": "preserve", "split": "dev"},
+    {"id": 11, "name": "voce-campione", "genre": "voce d'autore", "target": "preserve", "split": "dev"},
+    {"id": 12, "name": "citazione-non-verificabile", "genre": "revisione con guardia fattuale", "target": "improve", "split": "dev"},
+    {"id": 13, "name": "bipolare-misto", "genre": "line edit con casi misti", "target": "mixed", "split": "dev"},
+    {"id": 14, "name": "tesi-distinzione-informativa", "genre": "tesi filosofica", "target": "preserve", "split": "held-out"},
+    {"id": 15, "name": "configurazione-tecnica", "genre": "documentazione tecnica", "target": "preserve", "split": "held-out"},
+    {"id": 16, "name": "transizioni-accademiche", "genre": "prosa accademica", "target": "improve", "split": "held-out"},
+    {"id": 17, "name": "cortesia-epistolare", "genre": "email formale", "target": "preserve", "split": "held-out"}
+  ]
+}

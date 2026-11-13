@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+*.swp
+*~
+.idea/
+.vscode/
+
+# Build (pacchetto-skill rigenerabile con scripts/package-skill.mjs)
+dist/
+
+# Artefatti del design-tool impeccable (rigenerabili, non versionati)
+.impeccable/
+DESIGN.md
+PRODUCT.md

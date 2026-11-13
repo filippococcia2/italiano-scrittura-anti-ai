@@ -1,0 +1,88 @@
+# FAQ
+
+![Version](https://img.shields.io/badge/version-2.21.0-blue.svg)
+
+Domande ricorrenti su *scrittura-italiana*. Per esempi concreti vedi **[ESEMPI.md](ESEMPI.md)**.
+
+### Che cosa fa Scrittura italiana?
+
+È una **skill editoriale per l'italiano**: corregge, chiarisce, riscrive e rende naturale un
+testo **senza cambiarne il significato** — fatti, intenzione e registro restano dell'autore.
+Sei azioni riconoscibili: scrivi, correggi, chiarisci, riscrivi, umanizza, risolvi un dubbio
+di lingua. Sotto c'è un metodo editoriale (regole, registro e struttura dell'italiano), non
+una blacklist di parole che "sembrano AI".
+
+### È un humanizer? Fa sembrare umano un testo scritto dall'AI?
+
+Puoi usarla anche così, ed è il caso d'uso più cercato: incolli un testo che "sa di AI" e te
+lo restituisce naturale — via perifrasi, gerundite, triadi, avverbi in *-mente*, trattini
+lunghi, antilingua, cliché, chiusure ottimistiche vuote — **senza trucchi per aggirare i
+detector**. La differenza con un humanizer qualsiasi: non fa trova-e-sostituisci, conosce
+l'italiano, perciò te lo rende anche corretto (punteggiatura, tipografia), chiaro ed
+efficace. Funziona anche su **testi tuoi**: lì fa da revisore che *spiega* la regola,
+soprattutto quando parti da appunti o da una "brutta" stesa da un modello.
+
+### Non è solo un correttore come quello di Word?
+
+Fa molto di più. Un correttore vede refusi e accordi; questa skill lavora anche su punteggiatura
+fine, registro, figure retoriche, ritmo, coesione lessicale e sui tic ricorrenti dell'italiano
+generato dall'AI. E non riscrive di testa sua: la indirizzi tu, propone e spiega.
+
+### Cosa copre, oltre a punteggiatura e anti-AI?
+
+Tutto l'arco della scrittura. Oltre alla **costruzione del testo** (*dispositio*: come iniziare,
+articolare e chiudere), all'**antilingua** (l'affettazione "all'italiana": *recarsi* per *andare*,
+*criticità* per *problemi*) e a un repertorio di **frasi fatte e cliché**, dalla v2.4.0 ci sono:
+**sintassi** (congiuntivo vs indicativo, *consecutio temporum*, periodo ipotetico, accordo del
+participio); **coesione e coerenza** (il "filo" tra frasi e capoversi, i connettivi giusti);
+**argomentazione** (costruire una tesi, riassumere); **divulgazione** (spiegare cose complesse:
+numeri, termini tecnici, metafore esplicative); **narrativa** (l'idea, il punto di vista); e
+**revisione** (trovare la parola giusta, limare a freddo). Insomma, dalla virgola all'architettura
+del discorso. Distillata da una libreria di manuali italiani (Serianni, Mortara Garavelli, Giunta,
+Pontiggia, Rigotti e altri).
+
+### Non mi rende pigro o "incapace"?
+
+È il contrario: per usarla bene devi capire *perché* qualcosa è un errore, e ogni correzione
+arriva con la regola e la fonte (Mortara Garavelli, non un "secondo me"). È più vicina a un
+tutor che a una stampella. E togliere la fatica meccanica dei soliti refusi serve proprio a
+concentrarsi su struttura, ritmo e voce, dove «scrivere meglio» succede davvero.
+
+### Non scambia un "tono da AI" con un altro "tono da AI"?
+
+No: non impone uno stile. Rimuove errori e tic, e può **seguire la tua voce** se le dai un
+campione del tuo modo di scrivere. Le scelte stilistiche volute restano tue.
+
+### Mi corregge anche i messaggi informali (chat, social)?
+
+No, se il registro è quello. La skill riconosce il **livello di controllo** del testo: nel
+testo non controllato (web, chat, commenti) le convenzioni da tastiera — virgolette dritte,
+accenti «da tastiera», niente caporali — non sono errori e non vengono toccate. Le norme
+editoriali si applicano solo al testo controllato (o se le chiedi esplicitamente).
+
+### Funziona con il mio assistente / in che lingua?
+
+I contenuti sono in **italiano**. Puoi usarli con **GPT, Claude, Qwen, DeepSeek e altri
+LLM** che seguono istruzioni in italiano. Negli agenti compatibili con Agent Skills
+usa `npx skills add hypnosdesign/claude-skill-scrittura-italiana`; nelle altre
+interfacce fornisci la [versione monofile](scrittura-italiana-single-file.md) come
+istruzioni o documento di riferimento. Caricamento, attivazione e strumenti
+dipendono dall'interfaccia; le valutazioni disponibili restano specifiche dei
+modelli e dei casi provati.
+
+### Come la uso, in pratica?
+
+Caricala nel tuo assistente, poi chiedigli di scrivere o correggere un testo — dicendo **se è tuo o
+generato dall'AI** e **in che registro** (editoriale o informale). Se vuoi che mantenga la tua
+voce, incolla un campione del tuo modo di scrivere.
+
+### È gratis? Che licenza ha?
+
+Sì, è gratis e open-source, sotto **CC BY-SA 4.0**: puoi usarla, modificarla e ridistribuirla
+(anche per fini commerciali) citando la fonte e mantenendo la stessa licenza.
+
+### Posso contribuire o proporre un manuale da «distillare»?
+
+Sì, con piacere: pattern dell'italiano-AI mancanti, casi di punteggiatura, esempi migliori, o
+manuali di riferimento da cui estrarre regole. Apri una issue o una pull request — vedi
+**[CONTRIBUTING.md](CONTRIBUTING.md)**.

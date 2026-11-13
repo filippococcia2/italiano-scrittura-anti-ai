@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "skills": {
+    "scrittura-italiana": {
+      "source": "hypnosdesign/claude-skill-scrittura-italiana",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "b86a7818810704be032d21e391181d037f05ec46ec15f1b9961856acff5456e8"
+    }
+  }
+}

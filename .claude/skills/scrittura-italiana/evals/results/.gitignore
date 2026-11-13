@@ -1,0 +1,6 @@
+# Run ordinari rigenerabili: ignorati di default.
+# Le directory reference-* sono snapshot storici intenzionalmente versionati.
+*/
+!.gitignore
+!reference-*/
+!reference-*/**
